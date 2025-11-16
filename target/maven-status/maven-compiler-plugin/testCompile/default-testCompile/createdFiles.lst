@@ -1,0 +1,8 @@
+com/shawmatrix/automation/pages/DashboardPage.class
+com/shawmatrix/automation/runners/TestNGRunner.class
+com/shawmatrix/automation/runners/CucumberTestRunner.class
+com/shawmatrix/automation/stepdefinitions/LoginSteps.class
+com/shawmatrix/automation/tests/UITests.class
+com/shawmatrix/automation/pages/LoginPage.class
+com/shawmatrix/automation/tests/ApiTests.class
+com/shawmatrix/automation/stepdefinitions/ApiSteps.class

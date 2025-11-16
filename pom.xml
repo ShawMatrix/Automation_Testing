@@ -4,7 +4,6 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.automation.testing</groupId>
     <artifactId>automation-testing</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -12,89 +11,120 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
+        <slf4j.version>2.0.12</slf4j.version>
+        <commons.io.version>2.15.1</commons.io.version>
+        <commons.compress.version>1.26.0</commons.compress.version>
+        <commons.lang3.version>3.14.0</commons.lang3.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- Force stable versions to prevent WebDriverManager conflicts -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons.compress.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
-        <!-- TestNG -->
+        <!-- ✅ Test Automation Core -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.9.0</version>
+            <scope>test</scope>
         </dependency>
 
-        <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.21.0</version>
         </dependency>
 
-        <!-- Cucumber Java -->
+        <!-- ✅ Cucumber for BDD -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>7.15.0</version>
         </dependency>
-
-        <!-- Cucumber TestNG -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
             <version>7.15.0</version>
         </dependency>
 
-        <!-- SLF4J API -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>2.0.13</version>
-        </dependency>
-
-        <!-- Logback Classic -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.4.14</version>
-        </dependency>
-
-        <!-- ExtentReports -->
-        <dependency>
-            <groupId>com.aventstack</groupId>
-            <artifactId>extentreports</artifactId>
-            <version>5.0.9</version>
-        </dependency>
-
-        <!-- WebDriverManager -->
+        <!-- ✅ WebDriverManager (for automatic driver setup) -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.7.0</version>
+            <version>5.9.2</version>
+            <exclusions>
+                <!-- Exclude older dependency versions -->
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-compress</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- REST-assured -->
+        <!-- ✅ API Testing -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>5.4.0</version>
         </dependency>
+
+        <!-- ✅ Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ✅ Logging setup -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Maven Surefire Plugin for TestNG -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <testNGArtifactName>org.testng:testng</testNGArtifactName>
-                </configuration>
-            </plugin>
-
-            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -105,5 +135,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
